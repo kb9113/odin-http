@@ -49,6 +49,7 @@ Status :: enum {
 	Range_Not_Satisfiable           = 416,
 	Expectation_Failed              = 417,
 	Im_A_Teapot                     = 418,
+	Method_Failure                  = 420,
 	Misdirected_Request             = 421,
 	Unprocessable_Content           = 422,
 	Locked                          = 423,
