@@ -94,8 +94,7 @@ Escapes any newlines and converts ASCII to lowercase.
 */
 @(private="file")
 sanitize_key :: proc(h: Headers, k: string) -> string {
-    // this was changed so we do not leak memory
-	allocator := context.temp_allocator
+	allocator := h._kv.allocator if h._kv.allocator.procedure != nil else context.temp_allocator
 
 	// general +4 in rare case of newlines, so we might not need to reallocate.
 	b := strings.builder_make(0, len(k)+4, allocator)
