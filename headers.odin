@@ -49,7 +49,9 @@ headers_get_unsafe :: #force_inline proc(h: Headers, k: string) -> (string, bool
 }
 
 headers_has :: proc(h: Headers, k: string) -> bool {
-	return sanitize_key(h, k) in h._kv
+    sanitized_key := sanitize_key(h, k)
+    defer delete(sanitized_key)
+	return sanitized_key in h._kv
 }
 
 /*

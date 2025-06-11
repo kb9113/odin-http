@@ -186,6 +186,8 @@ parse_response :: proc(socket: Communication, allocator := context.allocator) ->
 
 		if key == "set-cookie" {
 			cookie_str := http.headers_get_unsafe(res.headers, "set-cookie")
+			// annoyingly we cannot set the cookie as a header since it may be duplicated
+			// but we also need to remember to free it since cookie parse takes slices into it
 			http.headers_delete_unsafe(&res.headers, "set-cookie")
 			delete(key)
 

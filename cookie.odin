@@ -23,6 +23,7 @@ Cookie :: struct {
 	partitioned:  bool,
 	secure:       bool,
 	same_site:    Cookie_Same_Site,
+	raw_string:   string // needs to be freed
 }
 
 // Builds the Set-Cookie header string representation of the given cookie.
@@ -91,7 +92,8 @@ cookie_string :: proc(c: Cookie, allocator := context.allocator) -> string {
 // Allocations are done to check case-insensitive attributes but they are deleted right after.
 // So, all the returned strings (inside cookie) are slices into the given value string.
 cookie_parse :: proc(value: string, allocator := context.allocator) -> (cookie: Cookie, ok: bool) {
-	value := value
+	cookie.raw_string = value
+    value := value
 
 	eq := strings.index_byte(value, '=')
 	if eq < 1 do return
